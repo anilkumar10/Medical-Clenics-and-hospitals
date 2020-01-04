@@ -1,0 +1,84 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml" ng-app="mymodule">
+<head>
+    <title></title>
+    <link href="../bootstrap-3.3.7-dist/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="../angular-1.7.8/angular-1.7.8/angular.js"></script>
+    <script src="../scripts/module.js"></script>
+    <script src="../scripts/controller.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h1>Doctor's Service</h1>
+                    </div>
+                    <div class="panel-body" ng-controller="mycontroller">
+                        <table class="table table-responsive table table-bordered table-hover table-striped">
+                            <tr>
+                                <td>
+                                    Search Doctor : <input type="text" placeholder="Search Here ...." ng-model="searchdoctor.dname" />
+                                    <br />
+                                    Exact Match : <input type="checkbox" ng-model="exactmatch" />
+                                </td>
+                                <td>
+                                    Sort Your Doctor's List : <select ng-model="sortdata">
+                                        <option>Choose Option</option>
+                                        <option value="dname">By Name</option>
+                                        <option value="dspicilization">By Specilization</option>
+                                        <option value="dclenic">By Locaity</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    Row to Display : <input type="number" ng-model="limitrow" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table table-responsive table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Sl No</th>
+                                    <th class="text-center">Profile Photo</th>
+                                    <th class="text-center">Doctor's Name</th>
+                                    <th class="text-center">Doctor's Specilization</th>
+                                    <th class="text-center">Doctor's Fee</th>
+                                    <th class="text-center">Clenic Address</th>
+                                    <th class="text-center">Public Rating</th>
+                                    <th class="text-center">Likes / Dislikes</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr ng-repeat="a in doctors | filter:searchdoctor:exactmatch | orderBy:sortdata | limitTo:limitrow">
+                                    <td>{{a.slno}}</td>
+                                    <td><img ng-src="{{a.dphoto}}" height="100" width="100" /></td>
+                                    <td class="text-center text-danger">{{a.dname | uppercase}}</td>
+                                    <td><p style="font-weight:bold">{{a.dspicilization | uppercase}}</p></td>
+                                    <td>{{a.dfee | currency:"₹":2}}</td>
+                                    <td>{{a.dclenic}}</td>
+                                    <td>
+                                        <a href="#"><i class="glyphicon glyphicon-star"></i></a>
+                                        <a href="#"><i class="glyphicon glyphicon-star"></i></a>
+                                        <a href="#"><i class="glyphicon glyphicon-star"></i></a>
+                                        <a href="#"><i class="glyphicon glyphicon-star"></i></a>
+                                    </td>
+                                    <td>
+                                        {{a.likes}}
+                                        {{a.dislikes}}
+                                        <input type="button" class="glyphicon glyphicon-thumbs-up" ng-click="IncrementLikes(a)" />
+                                        <input type="button" class="glyphicon glyphicon-thumbs-down" ng-click="IncrementDisLikes(a)" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="panel-footer">
+                        &copy; | Designed By Anil Kumar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
